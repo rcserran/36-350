@@ -15,5 +15,9 @@ run_simulation = function(n_trials, n, p, cutoff) {
     trial.data = generate_data(n,p)
     p.values[trial] = model_select(trial.data$covariates, trial.data$responses, cutoff)
   }
-  hist(p.values)
+  return(write.csv(p.values), file = "p_values.csv")
+}
+
+make_plot = function(datapath) {
+  hist(read.csv(datapath))
 }
