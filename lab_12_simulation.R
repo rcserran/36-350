@@ -8,3 +8,12 @@ model_select = function(covariates, responses, cutoff) {
   retained = covariates[, summary(lm(responses ~ covariates))$coefficients[,4] <= cutoff]
   return(summary(lm(responses ~ retained))$coefficients[,4])
 }
+
+run_simulation = function(n_trials, n, p, cutoff) {
+  p.values = vector(mode = "numeric", length = n_trials)
+  for(trial in 1:n_trials) {
+    trial.data = generate_data(n,p)
+    p.values[trial] = model_select(trial.data$covariates, trial.data$responses, cutoff)
+  }
+  hist(p.values)
+}
